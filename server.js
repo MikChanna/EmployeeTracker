@@ -17,7 +17,8 @@ connection.connect(function (err) {
   console.log("You are now connected");
   // promptUser();
   //   readEmployees();
-  managers();
+  // managers();
+  financeEmployees();
 });
 
 // Displays all employees
@@ -40,6 +41,19 @@ function managers() {
     console.log(res);
     connection.end();
   });
+}
+
+function financeEmployees() {
+  console.log("Selecting all finance employees");
+  connection.query(
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE ?",
+    { name: "Finance" },
+    function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      connection.end();
+    }
+  );
 }
 
 function promptUser(answers) {
