@@ -15,10 +15,10 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
   if (err) throw err;
   console.log("You are now connected");
-  // promptUser();
+  promptUser();
   //   readEmployees();
   // managers();
-  supportEmployees();
+  // supportEmployees();
 });
 
 // Displays all employees
@@ -27,7 +27,6 @@ function readEmployees() {
   connection.query("SELECT * FROM employee", function (err, res) {
     if (err) throw err;
     console.log(res);
-    connection.end();
   });
 }
 
@@ -55,6 +54,7 @@ function financeEmployees() {
     }
   );
 }
+
 function engineerEmployees() {
   console.log("Selecting all engineering employees");
   connection.query(
@@ -109,7 +109,42 @@ function promptUser(answers) {
     ])
     .then((answers) => {
       if (answers.action === "View Employees") {
-        readEmployees();
+        inquirer
+          .prompt([
+            {
+              type: "list",
+              name: "view",
+              message: "Which employees would you like to view?",
+              choices: [
+                "All Employees",
+                "All Managers",
+                "Finance Employees",
+                "Engineering Employees",
+                "Support Employees",
+                "Sales Employees",
+              ],
+            },
+          ])
+          .then((answers) => {
+            if (answers.view === "All Employees") {
+              readEmployees();
+            }
+            if (answers.view === "All Managers") {
+              managers();
+            }
+            if (answers.view === "Finance Employees") {
+              financeEmployees();
+            }
+            if (answers.view === "Engineering Employees") {
+              engineerEmployees();
+            }
+            if (answers.view === "Support Employees") {
+              supportEmployees();
+            }
+            if (answers.view === "Sales Employees") {
+              salesEmployees();
+            }
+          });
       }
     });
 }
