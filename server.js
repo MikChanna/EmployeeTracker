@@ -15,9 +15,9 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
   if (err) throw err;
   console.log("You are now connected");
-  promptUser();
+  // promptUser();
   //   readEmployees();
-  //   financeEmployees();
+  managers();
 });
 
 // Displays all employees
@@ -30,17 +30,17 @@ function readEmployees() {
   });
 }
 
-// function financeEmployees() {
-//   console.log("Selecting all finance employees");
-//   connection.query(("SELECT FROM employee WHERE department_id" = 1), function (
-//     err,
-//     res
-//   ) {
-//     if (err) throw err;
-//     console.log(res);
-//     connection.end();
-//   });
-// }
+function managers() {
+  console.log("Selecting all managers");
+  connection.query("SELECT * FROM employee WHERE role_id<5", function (
+    err,
+    res
+  ) {
+    if (err) throw err;
+    console.log(res);
+    connection.end();
+  });
+}
 
 function promptUser(answers) {
   return inquirer

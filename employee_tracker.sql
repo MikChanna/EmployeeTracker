@@ -51,3 +51,9 @@ INSERT INTO employee (first_name, last_name, role_id) VALUES ("Jonathon", "San",
 INSERT INTO employee (first_name, last_name, role_id) VALUES ("Jermaine", "Jones", 9);
 INSERT INTO employee (first_name, last_name, role_id) VALUES ("Shari", "Desai", 11);
 
+USE employee_tracker;
+SELECT first_name, last_name, title, salary, name
+FROM employee
+INNER JOIN role ON employee.role_id = role.id
+INNER JOIN department ON role.department_id = department.id;   
+
