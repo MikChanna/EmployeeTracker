@@ -18,7 +18,7 @@ connection.connect(function (err) {
   // promptUser();
   //   readEmployees();
   // managers();
-  financeEmployees();
+  supportEmployees();
 });
 
 // Displays all employees
@@ -48,6 +48,42 @@ function financeEmployees() {
   connection.query(
     "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE ?",
     { name: "Finance" },
+    function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      connection.end();
+    }
+  );
+}
+function engineerEmployees() {
+  console.log("Selecting all engineering employees");
+  connection.query(
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE ?",
+    { name: "Engineering" },
+    function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      connection.end();
+    }
+  );
+}
+function supportEmployees() {
+  console.log("Selecting all support employees");
+  connection.query(
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE ?",
+    { name: "Support" },
+    function (err, res) {
+      if (err) throw err;
+      console.log(res);
+      connection.end();
+    }
+  );
+}
+function salesEmployees() {
+  console.log("Selecting all sales employees");
+  connection.query(
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE ?",
+    { name: "Sales" },
     function (err, res) {
       if (err) throw err;
       console.log(res);
