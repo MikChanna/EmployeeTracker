@@ -224,44 +224,7 @@ function promptUser(answers) {
     ])
     .then((answers) => {
       if (answers.action === "View") {
-        inquirer
-          .prompt([
-            {
-              type: "list",
-              name: "view",
-              message: "What would you like to view",
-              choices: [
-                "All Departments",
-                "All Roles",
-                "All Employees",
-                "All Managers",
-                "Finance Employees",
-                "Engineering Employees",
-                "Support Employees",
-                "Sales Employees",
-              ],
-            },
-          ])
-          .then((answers) => {
-            if (answers.view === "All Employees") {
-              readEmployees();
-            }
-            if (answers.view === "All Managers") {
-              managers();
-            }
-            if (answers.view === "Finance Employees") {
-              financeEmployees();
-            }
-            if (answers.view === "Engineering Employees") {
-              engineerEmployees();
-            }
-            if (answers.view === "Support Employees") {
-              supportEmployees();
-            }
-            if (answers.view === "Sales Employees") {
-              salesEmployees();
-            }
-          });
+        promptView();
       }
     });
 }
@@ -272,4 +235,45 @@ function init() {
       figlet.textSync("Employee Tracker", { horizontalLayout: "full" })
     )
   );
+}
+
+function promptView() {
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "view",
+        message: "What would you like to view",
+        choices: [
+          "All Departments",
+          "All Roles",
+          "All Employees",
+          "All Managers",
+          "Finance Employees",
+          "Engineering Employees",
+          "Support Employees",
+          "Sales Employees",
+        ],
+      },
+    ])
+    .then((answers) => {
+      if (answers.view === "All Employees") {
+        readEmployees();
+      }
+      if (answers.view === "All Managers") {
+        managers();
+      }
+      if (answers.view === "Finance Employees") {
+        financeEmployees();
+      }
+      if (answers.view === "Engineering Employees") {
+        engineerEmployees();
+      }
+      if (answers.view === "Support Employees") {
+        supportEmployees();
+      }
+      if (answers.view === "Sales Employees") {
+        salesEmployees();
+      }
+    });
 }
