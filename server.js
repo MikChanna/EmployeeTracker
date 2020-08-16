@@ -32,9 +32,10 @@ function readEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        chalk.green(
-          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
-        )
+        "\n" +
+          chalk.green(
+            "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+          )
       );
       // for loop to display all information selected
       for (var i = 0; i < res.length; i++) {
@@ -64,9 +65,10 @@ function managers() {
   ) {
     if (err) throw err;
     console.log(
-      chalk.green(
-        "First Name  |  Last Name  |  Title  |  Salary  |  Department"
-      )
+      "\n" +
+        chalk.green(
+          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        )
     );
     // for loop to display all information selected
     for (var i = 0; i < res.length; i++) {
@@ -95,9 +97,10 @@ function financeEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        chalk.green(
-          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
-        )
+        "\n" +
+          chalk.green(
+            "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+          )
       );
       for (var i = 0; i < res.length; i++) {
         console.log(
@@ -126,9 +129,10 @@ function engineerEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        chalk.green(
-          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
-        )
+        "\n" +
+          chalk.green(
+            "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+          )
       );
       // for loop to display all information selected
       for (var i = 0; i < res.length; i++) {
@@ -157,9 +161,10 @@ function supportEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        chalk.green(
-          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
-        )
+        "\n" +
+          chalk.green(
+            "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+          )
       );
       // for loop to display all information selected
       for (var i = 0; i < res.length; i++) {
@@ -188,9 +193,10 @@ function salesEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        chalk.green(
-          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
-        )
+        "\n" +
+          chalk.green(
+            "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+          )
       );
       // for loop to display all information selected
       for (var i = 0; i < res.length; i++) {
@@ -262,21 +268,27 @@ function promptView() {
     .then((answers) => {
       if (answers.view === "All Employees") {
         readEmployees();
+        promptUser();
       }
       if (answers.view === "All Managers") {
         managers();
+        promptUser();
       }
       if (answers.view === "Finance Employees") {
         financeEmployees();
+        promptUser();
       }
       if (answers.view === "Engineering Employees") {
         engineerEmployees();
+        promptUser();
       }
       if (answers.view === "Support Employees") {
         supportEmployees();
+        promptUser();
       }
       if (answers.view === "Sales Employees") {
         salesEmployees();
+        promptUser();
       }
     });
 }
