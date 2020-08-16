@@ -55,8 +55,10 @@ function readEmployees() {
       }
     }
   );
+  promptUser();
 }
 
+// displays all managers i.e. role.id 1-4
 function managers() {
   console.log("Selecting all managers");
   connection.query("SELECT * FROM employee WHERE role_id<5", function (
@@ -87,8 +89,10 @@ function managers() {
       );
     }
   });
+  promptUser();
 }
 
+// displays all finance employees
 function financeEmployees() {
   console.log("Selecting all finance employees");
   connection.query(
@@ -119,8 +123,10 @@ function financeEmployees() {
       }
     }
   );
+  promptUser();
 }
 
+// displays all engineering employees
 function engineerEmployees() {
   console.log("Selecting all engineering employees");
   connection.query(
@@ -152,7 +158,10 @@ function engineerEmployees() {
       }
     }
   );
+  promptUser();
 }
+
+// displays all support employees
 function supportEmployees() {
   console.log("Selecting all support employees");
   connection.query(
@@ -184,7 +193,10 @@ function supportEmployees() {
       }
     }
   );
+  promptUser();
 }
+
+// displays all sales employees
 function salesEmployees() {
   console.log("Selecting all sales employees");
   connection.query(
@@ -216,8 +228,10 @@ function salesEmployees() {
       }
     }
   );
+  promptUser();
 }
 
+// displays the name of all departments
 function viewDepartments() {
   console.log("Selecting all Departments");
   connection.query("SELECT * FROM department", function (err, res) {
@@ -228,8 +242,10 @@ function viewDepartments() {
       console.log(chalk.blue(res[i].name));
     }
   });
+  promptUser();
 }
 
+// displays all the roles
 function viewRoles() {
   connection.query("SELECT * FROM role", function (err, res) {
     if (err) throw err;
@@ -241,6 +257,7 @@ function viewRoles() {
   });
 }
 
+// prompts user with what they would like to do
 function promptUser(answers) {
   return inquirer
     .prompt([
@@ -255,12 +272,16 @@ function promptUser(answers) {
       if (answers.action === "View") {
         promptView();
       }
+      if (answers.action === "Add") {
+        promptAdd();
+      }
       if (answers.action === "Exit") {
         endConn();
       }
     });
 }
 
+// displays Banner
 function init() {
   return console.log(
     chalk.blue(
@@ -269,6 +290,7 @@ function init() {
   );
 }
 
+// prompts user with what they would like to view
 function promptView() {
   return inquirer
     .prompt([
@@ -291,7 +313,6 @@ function promptView() {
     .then((answers) => {
       if (answers.view === "All Departments") {
         viewDepartments();
-        promptUser();
       }
       if (answers.view === "All Roles") {
         viewRoles();
@@ -299,31 +320,71 @@ function promptView() {
       }
       if (answers.view === "All Employees") {
         readEmployees();
-        promptUser();
       }
       if (answers.view === "All Managers") {
         managers();
-        promptUser();
       }
       if (answers.view === "Finance Employees") {
         financeEmployees();
-        promptUser();
       }
       if (answers.view === "Engineering Employees") {
         engineerEmployees();
-        promptUser();
       }
       if (answers.view === "Support Employees") {
         supportEmployees();
-        promptUser();
       }
       if (answers.view === "Sales Employees") {
         salesEmployees();
-        promptUser();
       }
     });
 }
 
+function addDept(answers) {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "addDept",
+        message: "What is the name of your new department?",
+      },
+    ])
+    .then((answers) => {
+      connection.query(
+        "INSERT into department SET ?",
+        { name: answers.addDept },
+        function (err, res) {
+          if (err) throw err;
+          viewDepartments();
+        }
+      );
+    });
+}
+
+// prompts user with what they would like to view
+function promptAdd() {
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "add",
+        message: "What would you like to add",
+        choices: ["Add Department", "Add Role", "Add Employee"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.add === "Add Department") {
+        addDept();
+      }
+      if (answers.view === "Add Role") {
+        addRole();
+      }
+      if (answers.view === "Add Employee") {
+        addEmployee();
+      }
+    });
+}
+
+// ends connection
 function endConn() {
   connection.end();
 }
