@@ -384,8 +384,17 @@ function addRole(answers) {
       },
     ])
     .then((answers) => {
-      console.log(answers.deptid);
-      promptUser();
+      var answer = answers.deptid;
+      var index = departments.indexOf(answer) + 1;
+
+      connection.query(
+        "INSERT into role SET ?",
+        { title: answers.title, salary: answers.salary, department_id: index },
+        function (err, res) {
+          if (err) throw err;
+          viewRoles();
+        }
+      );
     });
 }
 
