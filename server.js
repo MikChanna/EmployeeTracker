@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const pw = require("./pw");
 const chalk = require("chalk");
 const figlet = require("figlet");
+var departments = [];
 
 // create sql connection
 var connection = mysql.createConnection({
@@ -361,6 +362,8 @@ function addDept(answers) {
 }
 
 function addRole(answers) {
+  pushDept();
+
   return inquirer
     .prompt([
       {
@@ -377,19 +380,25 @@ function addRole(answers) {
         type: "list",
         name: "deptid",
         message: "Which department will this role work under?",
-        choices: [viewDepartments()],
+        choices: departments,
       },
     ])
     .then((answers) => {
-      connection.query(
-        "INSERT into role SET ?",
-        { title: answers.title, salary: answers.salary },
-        function (err, res) {
-          if (err) throw err;
-          viewRoles();
-        }
-      );
+      console.log(answers.deptid);
+      promptUser();
     });
+}
+
+function pushDept() {
+  departments = [];
+  connection.query("SELECT * FROM department", function (err, res) {
+    if (err) throw err;
+    // for loop to stringify dept names
+    for (var i = 0; i < res.length; i++) {
+      var deptName = res[i].name;
+      departments.push(deptName);
+    }
+  });
 }
 
 // prompts user with what they would like to view
@@ -407,10 +416,10 @@ function promptAdd() {
       if (answers.add === "Add Department") {
         addDept();
       }
-      if (answers.view === "Add Role") {
+      if (answers.add === "Add Role") {
         addRole();
       }
-      if (answers.view === "Add Employee") {
+      if (answers.add === "Add Employee") {
         addEmployee();
       }
     });
