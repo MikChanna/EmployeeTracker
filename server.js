@@ -218,6 +218,29 @@ function salesEmployees() {
   );
 }
 
+function viewDepartments() {
+  console.log("Selecting all Departments");
+  connection.query("SELECT * FROM department", function (err, res) {
+    if (err) throw err;
+    console.log("\n" + chalk.green("Department Names"));
+    // for loop to display all information selected
+    for (var i = 0; i < res.length; i++) {
+      console.log(chalk.blue(res[i].name));
+    }
+  });
+}
+
+function viewRoles() {
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    console.log("\n" + chalk.green("Roles/Titles"));
+    // for loop to display all information selected
+    for (var i = 0; i < res.length; i++) {
+      console.log(chalk.blue(res[i].title));
+    }
+  });
+}
+
 function promptUser(answers) {
   return inquirer
     .prompt([
@@ -266,6 +289,14 @@ function promptView() {
       },
     ])
     .then((answers) => {
+      if (answers.view === "All Departments") {
+        viewDepartments();
+        promptUser();
+      }
+      if (answers.view === "All Roles") {
+        viewRoles();
+        promptUser();
+      }
       if (answers.view === "All Employees") {
         readEmployees();
         promptUser();
