@@ -219,12 +219,15 @@ function promptUser(answers) {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: ["View", "Add", "Delete", "Edit"],
+        choices: ["View", "Add", "Delete", "Edit", "Exit"],
       },
     ])
     .then((answers) => {
       if (answers.action === "View") {
         promptView();
+      }
+      if (answers.action === "Exit") {
+        endConn();
       }
     });
 }
@@ -276,4 +279,8 @@ function promptView() {
         salesEmployees();
       }
     });
+}
+
+function endConn() {
+  connection.end();
 }
