@@ -27,10 +27,28 @@ connection.connect(function (err) {
 // Displays all employees
 function readEmployees() {
   console.log("Selecting all employees");
-  connection.query("SELECT * FROM employee", function (err, res) {
-    if (err) throw err;
-    console.log(res);
-  });
+  connection.query(
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id",
+    function (err, res) {
+      if (err) throw err;
+      console.log(
+        "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+      );
+      for (var i = 0; i < res.length; i++) {
+        console.log(
+          res[i].first_name +
+            " | " +
+            res[i].last_name +
+            " | " +
+            res[i].title +
+            " | " +
+            res[i].salary +
+            " | " +
+            res[i].name
+        );
+      }
+    }
+  );
 }
 
 function managers() {
@@ -52,8 +70,22 @@ function financeEmployees() {
     { name: "Finance" },
     function (err, res) {
       if (err) throw err;
-      console.log(res);
-      connection.end();
+      console.log(
+        "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+      );
+      for (var i = 0; i < res.length; i++) {
+        console.log(
+          res[i].first_name +
+            " | " +
+            res[i].last_name +
+            " | " +
+            res[i].title +
+            " | " +
+            res[i].salary +
+            " | " +
+            res[i].name
+        );
+      }
     }
   );
 }
@@ -102,23 +134,20 @@ function promptUser(answers) {
         type: "list",
         name: "action",
         message: "What would you like to do?",
-        choices: [
-          "View Employees",
-          "Add Employee",
-          "Delete Employee",
-          "Edit Employee",
-        ],
+        choices: ["View", "Add", "Delete", "Edit"],
       },
     ])
     .then((answers) => {
-      if (answers.action === "View Employees") {
+      if (answers.action === "View") {
         inquirer
           .prompt([
             {
               type: "list",
               name: "view",
-              message: "Which employees would you like to view?",
+              message: "What would you like to view",
               choices: [
+                "All Departments",
+                "All Roles",
                 "All Employees",
                 "All Managers",
                 "Finance Employees",
