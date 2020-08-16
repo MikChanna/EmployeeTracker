@@ -53,9 +53,9 @@ function readEmployees() {
           )
         );
       }
+      promptUser();
     }
   );
-  promptUser();
 }
 
 // displays all managers i.e. role.id 1-4
@@ -88,8 +88,8 @@ function managers() {
         )
       );
     }
+    promptUser();
   });
-  promptUser();
 }
 
 // displays all finance employees
@@ -121,9 +121,9 @@ function financeEmployees() {
           )
         );
       }
+      promptUser();
     }
   );
-  promptUser();
 }
 
 // displays all engineering employees
@@ -156,9 +156,9 @@ function engineerEmployees() {
           )
         );
       }
+      promptUser();
     }
   );
-  promptUser();
 }
 
 // displays all support employees
@@ -191,9 +191,9 @@ function supportEmployees() {
           )
         );
       }
+      promptUser();
     }
   );
-  promptUser();
 }
 
 // displays all sales employees
@@ -226,9 +226,9 @@ function salesEmployees() {
           )
         );
       }
+      promptUser();
     }
   );
-  promptUser();
 }
 
 // displays the name of all departments
@@ -241,8 +241,8 @@ function viewDepartments() {
     for (var i = 0; i < res.length; i++) {
       console.log(chalk.blue(res[i].name));
     }
+    promptUser();
   });
-  promptUser();
 }
 
 // displays all the roles
@@ -254,6 +254,7 @@ function viewRoles() {
     for (var i = 0; i < res.length; i++) {
       console.log(chalk.blue(res[i].title));
     }
+    promptUser();
   });
 }
 
@@ -316,7 +317,6 @@ function promptView() {
       }
       if (answers.view === "All Roles") {
         viewRoles();
-        promptUser();
       }
       if (answers.view === "All Employees") {
         readEmployees();
@@ -355,6 +355,38 @@ function addDept(answers) {
         function (err, res) {
           if (err) throw err;
           viewDepartments();
+        }
+      );
+    });
+}
+
+function addRole(answers) {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "What is the name of the new role?",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "What is the salary of this new role?",
+      },
+      {
+        type: "list",
+        name: "deptid",
+        message: "Which department will this role work under?",
+        choices: [viewDepartments()],
+      },
+    ])
+    .then((answers) => {
+      connection.query(
+        "INSERT into role SET ?",
+        { title: answers.title, salary: answers.salary },
+        function (err, res) {
+          if (err) throw err;
+          viewRoles();
         }
       );
     });
