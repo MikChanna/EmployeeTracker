@@ -4,6 +4,7 @@ const pw = require("./pw");
 const chalk = require("chalk");
 const figlet = require("figlet");
 var departments = [];
+var roles = [];
 
 // create sql connection
 var connection = mysql.createConnection({
@@ -384,8 +385,8 @@ function addRole(answers) {
       },
     ])
     .then((answers) => {
-      var answer = answers.deptid;
-      var index = departments.indexOf(answer) + 1;
+      let answer = answers.deptid;
+      let index = departments.indexOf(answer) + 1;
 
       connection.query(
         "INSERT into role SET ?",
@@ -406,6 +407,55 @@ function pushDept() {
     for (var i = 0; i < res.length; i++) {
       var deptName = res[i].name;
       departments.push(deptName);
+    }
+  });
+}
+
+function addEmployee(answers) {
+  pushRole();
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "first",
+        message: "What is your new employee's first name?",
+      },
+      {
+        type: "input",
+        name: "last",
+        message: "What is your new employee's last name?",
+      },
+      {
+        type: "list",
+        name: "roleid",
+        message: "What is your new employee's role?",
+        choices: roles,
+      },
+    ])
+    .then((answers) => {
+      let answer = answers.roleid;
+      let index = roles.indexOf(answer) + 1;
+      console.log(index);
+
+      connection.query(
+        "INSERT into employee SET ?",
+        { first_name: answers.first, last_name: answers.last, role_id: index },
+        function (err, res) {
+          if (err) throw err;
+          readEmployees();
+        }
+      );
+    });
+}
+
+function pushRole() {
+  roles = [];
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    // for loop to stringify dept names
+    for (var i = 0; i < res.length; i++) {
+      var roleName = res[i].title;
+      roles.push(roleName);
     }
   });
 }
