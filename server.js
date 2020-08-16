@@ -1,6 +1,8 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const pw = require("./pw");
+const chalk = require("chalk");
+const figlet = require("figlet");
 
 // create sql connection
 var connection = mysql.createConnection({
@@ -15,6 +17,7 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
   if (err) throw err;
   console.log("You are now connected");
+  init();
   promptUser();
   //   readEmployees();
   // managers();
@@ -147,4 +150,12 @@ function promptUser(answers) {
           });
       }
     });
+}
+
+function init() {
+  return console.log(
+    chalk.blue(
+      figlet.textSync("Employee Tracker", { horizontalLayout: "full" })
+    )
+  );
 }
