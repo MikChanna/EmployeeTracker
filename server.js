@@ -32,19 +32,24 @@ function readEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        chalk.green(
+          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        )
       );
+      // for loop to display all information selected
       for (var i = 0; i < res.length; i++) {
         console.log(
-          res[i].first_name +
-            " | " +
-            res[i].last_name +
-            " | " +
-            res[i].title +
-            " | " +
-            res[i].salary +
-            " | " +
-            res[i].name
+          chalk.blue(
+            res[i].first_name +
+              " | " +
+              res[i].last_name +
+              " | " +
+              res[i].title +
+              " | " +
+              res[i].salary +
+              " | " +
+              res[i].name
+          )
         );
       }
     }
@@ -58,8 +63,27 @@ function managers() {
     res
   ) {
     if (err) throw err;
-    console.log(res);
-    connection.end();
+    console.log(
+      chalk.green(
+        "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+      )
+    );
+    // for loop to display all information selected
+    for (var i = 0; i < res.length; i++) {
+      console.log(
+        chalk.blue(
+          res[i].first_name +
+            " | " +
+            res[i].last_name +
+            " | " +
+            res[i].title +
+            " | " +
+            res[i].salary +
+            " | " +
+            res[i].name
+        )
+      );
+    }
   });
 }
 
@@ -71,19 +95,23 @@ function financeEmployees() {
     function (err, res) {
       if (err) throw err;
       console.log(
-        "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        chalk.green(
+          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        )
       );
       for (var i = 0; i < res.length; i++) {
         console.log(
-          res[i].first_name +
-            " | " +
-            res[i].last_name +
-            " | " +
-            res[i].title +
-            " | " +
-            res[i].salary +
-            " | " +
-            res[i].name
+          chalk.blue(
+            res[i].first_name +
+              " | " +
+              res[i].last_name +
+              " | " +
+              res[i].title +
+              " | " +
+              res[i].salary +
+              " | " +
+              res[i].name
+          )
         );
       }
     }
@@ -97,8 +125,27 @@ function engineerEmployees() {
     { name: "Engineering" },
     function (err, res) {
       if (err) throw err;
-      console.log(res);
-      connection.end();
+      console.log(
+        chalk.green(
+          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        )
+      );
+      // for loop to display all information selected
+      for (var i = 0; i < res.length; i++) {
+        console.log(
+          chalk.blue(
+            res[i].first_name +
+              " | " +
+              res[i].last_name +
+              " | " +
+              res[i].title +
+              " | " +
+              res[i].salary +
+              " | " +
+              res[i].name
+          )
+        );
+      }
     }
   );
 }
@@ -109,8 +156,27 @@ function supportEmployees() {
     { name: "Support" },
     function (err, res) {
       if (err) throw err;
-      console.log(res);
-      connection.end();
+      console.log(
+        chalk.green(
+          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        )
+      );
+      // for loop to display all information selected
+      for (var i = 0; i < res.length; i++) {
+        console.log(
+          chalk.blue(
+            res[i].first_name +
+              " | " +
+              res[i].last_name +
+              " | " +
+              res[i].title +
+              " | " +
+              res[i].salary +
+              " | " +
+              res[i].name
+          )
+        );
+      }
     }
   );
 }
@@ -121,8 +187,27 @@ function salesEmployees() {
     { name: "Sales" },
     function (err, res) {
       if (err) throw err;
-      console.log(res);
-      connection.end();
+      console.log(
+        chalk.green(
+          "First Name  |  Last Name  |  Title  |  Salary  |  Department"
+        )
+      );
+      // for loop to display all information selected
+      for (var i = 0; i < res.length; i++) {
+        console.log(
+          chalk.blue(
+            res[i].first_name +
+              " | " +
+              res[i].last_name +
+              " | " +
+              res[i].title +
+              " | " +
+              res[i].salary +
+              " | " +
+              res[i].name
+          )
+        );
+      }
     }
   );
 }
