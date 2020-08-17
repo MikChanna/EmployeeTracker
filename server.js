@@ -649,9 +649,11 @@ function promptEdit() {
       if (answers.edit === "Edit Departments") {
         editDept();
       }
-      if (answers.view === "Edit Roles") {
+      if (answers.edit === "Edit Roles") {
+        editRole();
       }
-      if (answers.view === "Edit Employees") {
+      if (answers.edit === "Edit Employees") {
+        editEmployee();
       }
     });
 }
@@ -689,6 +691,99 @@ function editDept() {
         }
       );
       viewDepartments();
+    });
+}
+
+function editRole() {
+  return inquirer
+    .prompt([
+      // {
+      //   type: "list",
+      //   name: "role",
+      //   message: "What role would you like to edit?",
+      //   choices: roles,
+      // },
+      {
+        type: "input",
+        name: "title",
+        message: "What would you like to change this position's title to?",
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "What is the salary of this position?",
+      },
+      // {
+      //   type: "list",
+      //   name: "dept",
+      //   message: "What department will this position operate under?",
+      // },
+    ])
+    .then((answers) => {
+      // let answer = answers.dept;
+      // let index = departments.indexOf(answer) + 1;
+
+      connection.query(
+        "UPDATE role SET ? WHERE ?",
+        [
+          {
+            title: answers.title,
+            salary: answers.salary,
+          },
+          { id: 13 },
+        ],
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+      viewRoles();
+    });
+}
+
+function editEmployee() {
+  return inquirer
+    .prompt([
+      // {
+      //   type: "list",
+      //   name: "employee",
+      //   message: "Which employee would you like to edit?",
+      //   choices: employees,
+      // },
+      {
+        type: "input",
+        name: "first",
+        message: "What is the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "last",
+        message: "What is the employee's last name?",
+      },
+      // {
+      //   type: "list",
+      //   name: "role",
+      //   message: "What is the employee's position?",
+      // },
+    ])
+    .then((answers) => {
+      // let answer = answers.role;
+      // let index = roles.indexOf(answer) + 1;
+
+      connection.query(
+        "UPDATE employee SET ? WHERE ?",
+        [
+          {
+            first_name: answers.first,
+            last_name: answers.last,
+            role_id: 1,
+          },
+          { employee_id: 9 },
+        ],
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+      readEmployees();
     });
 }
 
