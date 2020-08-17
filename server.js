@@ -5,6 +5,7 @@ const chalk = require("chalk");
 const figlet = require("figlet");
 var departments = [];
 var roles = [];
+var employees = [];
 
 // create sql connection
 var connection = mysql.createConnection({
@@ -278,6 +279,12 @@ function promptUser(answers) {
       if (answers.action === "Add") {
         promptAdd();
       }
+      if (answers.action === "Delete") {
+        promptDelete();
+      }
+      if (answers.action === "Edit") {
+        promptEdit();
+      }
       if (answers.action === "Exit") {
         endConn();
       }
@@ -399,18 +406,6 @@ function addRole(answers) {
     });
 }
 
-function pushDept() {
-  departments = [];
-  connection.query("SELECT * FROM department", function (err, res) {
-    if (err) throw err;
-    // for loop to stringify dept names
-    for (var i = 0; i < res.length; i++) {
-      var deptName = res[i].name;
-      departments.push(deptName);
-    }
-  });
-}
-
 function addEmployee(answers) {
   pushRole();
   return inquirer
@@ -460,7 +455,7 @@ function pushRole() {
   });
 }
 
-// prompts user with what they would like to view
+// prompts user with what they would like to add
 function promptAdd() {
   return inquirer
     .prompt([
@@ -483,6 +478,128 @@ function promptAdd() {
       }
     });
 }
+
+// prompts user with what they would like to delete
+function promptDelete() {
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "delete",
+        message: "What would you like to delete",
+        choices: ["Delete Department", "Delete Role", "Delete Employee"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.delete === "Delete Department") {
+        deleteDept();
+      }
+      if (answers.delete === "Delete Role") {
+        deleteRole();
+      }
+      if (answers.delete === "Delete Employee") {
+        deleteEmployee();
+      }
+    });
+}
+
+// function deleteDept() {
+//   pushDept();
+//   return inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "dept",
+//         message: "What department would you like to delete?",
+//         choices: departments,
+//       },
+//     ])
+//     .then((answers) => {
+//       connection.query(
+//         "DELETE FROM department WHERE ?",
+//         {
+//          name: answers.dept,
+//         },
+//         function (err, res) {
+//           if (err) throw err;
+//         }
+//       );
+//     });
+// }
+
+// function deleteRole() {
+//   pushRole();
+//   return inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "role",
+//         message: "What role would you like to delete?",
+//         choices: roles,
+//       },
+//     ])
+//     .then((answers) => {
+//       connection.query(
+//         "DELETE FROM role WHERE ?",
+//         {
+//           title: answers.role,
+//         },
+//         function (err, res) {
+//           if (err) throw err;
+//         }
+//       );
+//     });
+// }
+
+// function deleteEmployee() {
+//   pushEmployee();
+//   return inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "employee",
+//         message: "Which employee would you like to delete?",
+//         choices: employees,
+//       },
+//     ])
+//     .then((answers) => {
+//       connection.query(
+//         "DELETE FROM employee WHERE ?",
+//         {
+//           first_name: answers.role,
+//         },
+//         function (err, res) {
+//           if (err) throw err;
+//         }
+//       );
+//     });
+// }
+
+function pushDept() {
+  departments = [];
+  connection.query("SELECT * FROM department", function (err, res) {
+    if (err) throw err;
+    // for loop to stringify dept names
+    for (var i = 0; i < res.length; i++) {
+      var deptName = res[i].name;
+      departments.push(deptName);
+    }
+    console.log("push to departments successful!");
+  });
+}
+
+// function pushEmployee() {
+//   employees = [];
+//   connection.query("SELECT * FROM employee", function (err, res) {
+//     if (err) throw err;
+//     // for loop to stringify dept names
+//     for (var i = 0; i < res.length; i++) {
+//       var name = res[i].first_name + res[i].last_name;
+//       employees.push(name);
+//     }
+//     console.log("push to employees successful!");
+//   });
+// }
 
 // ends connection
 function endConn() {
