@@ -443,18 +443,6 @@ function addEmployee(answers) {
     });
 }
 
-function pushRole() {
-  roles = [];
-  connection.query("SELECT * FROM role", function (err, res) {
-    if (err) throw err;
-    // for loop to stringify dept names
-    for (var i = 0; i < res.length; i++) {
-      var roleName = res[i].title;
-      roles.push(roleName);
-    }
-  });
-}
-
 // prompts user with what they would like to add
 function promptAdd() {
   return inquirer
@@ -477,6 +465,111 @@ function promptAdd() {
         addEmployee();
       }
     });
+}
+
+function deleteDept() {
+  // pushDept();
+  // return inquirer
+  //   .prompt([
+  //     {
+  //       type: "list",
+  //       name: "dept",
+  //       message: "What department would you like to delete?",
+  //       choices: departments,
+  //     },
+  //   ])
+  //   .then((answers) => {
+  // connection.query(
+  // "DELETE FROM department WHERE ?",
+  // {
+  //   name: answers.dept,
+  // },
+  // function (err, res) {
+  //   if (err) throw err;
+  // }
+  connection.query(
+    "DELETE FROM department WHERE ?",
+    {
+      name: "Channa's Department",
+    },
+    function (err, res) {
+      if (err) throw err;
+    }
+  );
+  viewDepartments();
+  // });
+}
+
+function deleteRole() {
+  // pushRole();
+  // return inquirer
+  //   .prompt([
+  //     {
+  //       type: "list",
+  //       name: "role",
+  //       message: "What role would you like to delete?",
+  //       choices: roles,
+  //     },
+  //   ])
+  //   .then((answers) => {
+  //     connection.query(
+  //       "DELETE FROM role WHERE ?",
+  //       {
+  //         title: answers.role,
+  //       },
+  //       function (err, res) {
+  //         if (err) throw err;
+  //       }
+
+  connection.query(
+    "DELETE FROM role WHERE ?",
+    {
+      title: "Channa's Position",
+    },
+    function (err, res) {
+      if (err) throw err;
+    }
+  );
+  viewRoles();
+  // });
+}
+
+function deleteEmployee() {
+  // pushEmployee();
+  // return inquirer
+  //   .prompt([
+  //     {
+  //       type: "list",
+  //       name: "employee",
+  //       message: "Which employee would you like to delete?",
+  //       choices: employees,
+  //     },
+  //   ])
+  //   .then((answers) => {
+  //     connection.query(
+  //       "DELETE FROM employee WHERE ?",
+  //       {
+  //         first_name: answers.role,
+  //       },
+  //       function (err, res) {
+  //         if (err) throw err;
+  //       }
+  //     );
+  connection.query(
+    "DELETE FROM employee WHERE ? AND WHERE ?",
+    {
+      first_name: "Channa",
+    },
+    {
+      last_name: "Mik",
+    },
+
+    function (err, res) {
+      if (err) throw err;
+    }
+  );
+  readEmployees();
+  // });
 }
 
 // prompts user with what they would like to delete
@@ -503,78 +596,6 @@ function promptDelete() {
     });
 }
 
-// function deleteDept() {
-//   pushDept();
-//   return inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "dept",
-//         message: "What department would you like to delete?",
-//         choices: departments,
-//       },
-//     ])
-//     .then((answers) => {
-//       connection.query(
-//         "DELETE FROM department WHERE ?",
-//         {
-//          name: answers.dept,
-//         },
-//         function (err, res) {
-//           if (err) throw err;
-//         }
-//       );
-//     });
-// }
-
-// function deleteRole() {
-//   pushRole();
-//   return inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "role",
-//         message: "What role would you like to delete?",
-//         choices: roles,
-//       },
-//     ])
-//     .then((answers) => {
-//       connection.query(
-//         "DELETE FROM role WHERE ?",
-//         {
-//           title: answers.role,
-//         },
-//         function (err, res) {
-//           if (err) throw err;
-//         }
-//       );
-//     });
-// }
-
-// function deleteEmployee() {
-//   pushEmployee();
-//   return inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "employee",
-//         message: "Which employee would you like to delete?",
-//         choices: employees,
-//       },
-//     ])
-//     .then((answers) => {
-//       connection.query(
-//         "DELETE FROM employee WHERE ?",
-//         {
-//           first_name: answers.role,
-//         },
-//         function (err, res) {
-//           if (err) throw err;
-//         }
-//       );
-//     });
-// }
-
 function pushDept() {
   departments = [];
   connection.query("SELECT * FROM department", function (err, res) {
@@ -588,18 +609,88 @@ function pushDept() {
   });
 }
 
-// function pushEmployee() {
-//   employees = [];
-//   connection.query("SELECT * FROM employee", function (err, res) {
-//     if (err) throw err;
-//     // for loop to stringify dept names
-//     for (var i = 0; i < res.length; i++) {
-//       var name = res[i].first_name + res[i].last_name;
-//       employees.push(name);
-//     }
-//     console.log("push to employees successful!");
-//   });
-// }
+function pushRole() {
+  roles = [];
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    // for loop to stringify dept names
+    for (var i = 0; i < res.length; i++) {
+      var roleName = res[i].title;
+      roles.push(roleName);
+    }
+  });
+}
+
+function pushEmployee() {
+  employees = [];
+  connection.query("SELECT * FROM employee", function (err, res) {
+    if (err) throw err;
+    // for loop to stringify dept names
+    for (var i = 0; i < res.length; i++) {
+      var name = res[i].first_name + res[i].last_name;
+      employees.push(name);
+    }
+    console.log("push to employees successful!");
+  });
+}
+
+// prompts user with what they would like to edit
+function promptEdit() {
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "edit",
+        message: "What would you like to edit",
+        choices: ["Edit Departments", "Edit Roles", "Edit Employees"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.edit === "Edit Departments") {
+        editDept();
+      }
+      if (answers.view === "Edit Roles") {
+      }
+      if (answers.view === "Edit Employees") {
+      }
+    });
+}
+
+function editDept() {
+  // pushDept();
+  return inquirer
+    .prompt([
+      // {
+      //   type: "list",
+      //   name: "dept",
+      //   message: "What department would you like to edit?",
+      //   choices: departments,
+      // },
+      {
+        type: "input",
+        name: "deptName",
+        message: "What would you like to change the department name to?",
+      },
+    ])
+    .then((answers) => {
+      // let answer = answers.dept;
+      // let index = departments.indexOf(answer) + 1;
+
+      connection.query(
+        "UPDATE department SET ? WHERE ?",
+        [
+          {
+            name: answers.deptName,
+          },
+          { id: 5 },
+        ],
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+      viewDepartments();
+    });
+}
 
 // ends connection
 function endConn() {
