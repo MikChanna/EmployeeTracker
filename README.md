@@ -25,7 +25,15 @@ After installing the program, run it in your terminal using node - `node server`
     -Delete: prompt you with the type of information you'd like to delete from the tables.
     -Edit: prompt you to change whatever type of information you wish.
     -Exit: will close the application.
+    
+   ![Screen Shot 2020-08-17 at 10 28 45 PM](https://user-images.githubusercontent.com/61893686/90463508-1864b680-e0d9-11ea-9f8f-a1b4cc6ba3f9.png) 
+    
+    
+    
+    
+    
 
+View Demo Here: https://drive.google.com/file/d/1huNOUxSmMSEnw7AYPqylh0ZYmNg-TXkf/view 
 
 ## Contributors
 
